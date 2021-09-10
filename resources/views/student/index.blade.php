@@ -5,25 +5,25 @@
    <div class="row justify-content-center">
        <div class="col-md-8">
            <div class="card">
-               <div class="card-header">Klasių sąrašas</div>
+               <div class="card-header">Student create</div>
 
                <div class="card-body">
                  <table class="table">
                    <tr>
-                     <th>Klasė</th>
-                     <th>Raidė</th>
-                     <th>Užeiti</th>
+                     <th>name</th>
+                     <th>surname</th>
+                     <th>id</th>
                      <th>edit</th>
                      <th>delete</th>
                    </tr>
-                  @foreach ($schoolClasses as $schoolClass)
+                  @foreach ($students as $student)
                     <tr>
-                      <td>{!!$schoolClass->grade!!}</td>
-                      <td>{!!$schoolClass->letter!!}</td>
-                      <td><a class="btn btn-success" href="{{route('schoolClass.show',[$schoolClass])}}">užeiti</a></td>
-                      <td><a class="btn btn-primary" href="{{route('schoolClass.edit',[$schoolClass])}}">edit</a></td>
+                      <td>{!!$student->grade!!}</td>
+                      <td>{!!$student->letter!!}</td>
+                      <td><a class="btn btn-success" href="{{route('student$student.show',[$student])}}">užeiti</a></td>
+                      <td><a class="btn btn-primary" href="{{route('student$student.edit',[$student])}}">edit</a></td>
                       <td>
-                        <form method="POST" action="{{route('schoolClass.destroy', $schoolClass)}}">
+                        <form method="POST" action="{{route('student$student.destroy', $student)}}">
                           @csrf
                           <button class="btn btn-danger" type="submit">DELETE</button>
                         </form>
