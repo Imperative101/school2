@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SchoolClassController;
+use App\Http\Controllers\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,4 +33,15 @@ Route::group(['prefix' => 'schoolClasses'], function(){
     Route::get('show/{schoolClass}', [SchoolClassController::class, 'show'])->name('schoolClass.show');
     Route::post('add/{schoolClass}', [SchoolClassController::class, 'add'])->name('schoolClass.add');
  });
+
  
+    Route::group(['prefix' => 'Students'], function(){
+    Route::get('', [StudentController::class, 'index'])->name('student.index');
+    Route::get('create', [StudentController::class, 'create'])->name('student.create');
+    Route::post('store', [StudentController::class, 'store'])->name('student.store');
+    Route::get('edit/{student}', [StudentController::class, 'edit'])->name('student.edit');
+    Route::post('update/{student}', [StudentController::class, 'update'])->name('student.update');
+    Route::post('delete/{student}', [StudentController::class, 'destroy'])->name('student.destroy');
+    Route::get('show/{student}', [StudentController::class, 'show'])->name('student.show');
+    Route::post('add/{student}', [StudentController::class, 'add'])->name('student.add');
+ });

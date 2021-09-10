@@ -14,7 +14,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        //
+        $students = Student::all();
+        return view('student.index', ['students' => $students]);
     }
 
     /**
@@ -24,7 +25,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view('student.create');
     }
 
     /**
@@ -35,7 +36,12 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    $student = new Student();
+    $student->name = $request->name;
+    $student->surname = $request->surname;
+    $student->school_class_id = $request->school_class_id;
+    $student->save();
+    return redirect()->route('student.index');
     }
 
     /**
@@ -57,7 +63,7 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return view('student.edit', ['student' => $student]);
     }
 
     /**
@@ -69,7 +75,11 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $student->name = $request->name;
+        $student->surname = $request->surname;
+	    $student->school_class_id = $request->school_class_id;
+        $student->save();
+        return redirect()->route('student.index');
     }
 
     /**
@@ -80,6 +90,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+        return redirect()->route('student.index');
     }
 }

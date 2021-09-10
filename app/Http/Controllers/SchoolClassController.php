@@ -14,7 +14,8 @@ class SchoolClassController extends Controller
      */
     public function index()
     {
-        //
+        $schoolClasses = SchoolClass::all();
+        return view('schoolClasses.index', ['schoolClasses' => $schoolClasses]);
     }
 
     /**
@@ -61,7 +62,7 @@ class SchoolClassController extends Controller
      */
     public function edit(SchoolClass $schoolClass)
     {
-        //
+        return view('SchoolClass.edit', ['SchoolClass' => $schoolClass]);
     }
 
     /**
@@ -73,7 +74,10 @@ class SchoolClassController extends Controller
      */
     public function update(Request $request, SchoolClass $schoolClass)
     {
-        //
+        $schoolClass->grade = $request->schoolClass_grade;
+       $schoolClass->letter = $request->schoolClass_letter;
+       $schoolClass->save();
+       return redirect()->route('schoolClass.index');
     }
 
     /**
@@ -84,6 +88,7 @@ class SchoolClassController extends Controller
      */
     public function destroy(SchoolClass $schoolClass)
     {
-        //
+        $schoolClass->delete();
+       return redirect()->route('schoolClass.index');
     }
 }
