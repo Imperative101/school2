@@ -19,6 +19,7 @@ class CreateTeachersTable extends Migration
             $table->string('surname');
             $table->string('subject');
             $table->timestamps();
+
         });
     }
 
