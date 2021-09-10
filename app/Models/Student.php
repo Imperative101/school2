@@ -8,8 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Student extends Model
 {
     use HasFactory;
-    
-    public function studentClass(){
-        return $this->belongsTo('App\Models\SchoolClass','school_class_id','id');
+  
+    public function studentClass()
+    {
+        return $this->belongsTo('App\Models\SchoolClass', 'school_class_id', 'id');
     }
+ 
 }

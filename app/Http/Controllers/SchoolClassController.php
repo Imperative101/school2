@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
+use App\Models\SchoolClassTeacher;
+use App\Models\Teacher;
+
 
 class SchoolClassController extends Controller
 {
@@ -14,6 +17,11 @@ class SchoolClassController extends Controller
      */
     public function index()
     {
+
+        //$class = SchoolClass::where('id','=',1)->first();
+        //dd($class->teachers);
+
+
         $schoolClasses = SchoolClass::all();
         return view('schoolClasses.index', ['schoolClasses' => $schoolClasses]);
     }
@@ -26,6 +34,11 @@ class SchoolClassController extends Controller
     public function create()
     {
         return view('schoolClass.create');
+    }
+
+    public function add(SchoolClass $schoolClass, Request $request){
+        $schoolClass->teachers()->attach($request->teacher);
+        return redirect()->route('schoolClass.show',['schoolClass'=>$schoolClass]);
     }
 
     /**
@@ -51,9 +64,19 @@ class SchoolClassController extends Controller
      */
     public function show(SchoolClass $schoolClass)
     {
-        //
-    }
+        // $teachers = Teacher::all();
+      
 
+        $id = $schoolClass->id;
+
+    //    dd( Teacher::where('id','=','1')->toSql() );
+
+      $teachers = Teacher::with('classes')->whereDoesntHave('classes', function($query) use ($id) {
+        $query->where('school_class_id', $id);
+        })->get()/*->toSql()*/;
+
+        return view('schoolClass.show',['schoolClass' =>$schoolClass,'teachers'=>$teachers ]);
+    }
     /**
      * Show the form for editing the specified resource.
      *
@@ -62,7 +85,9 @@ class SchoolClassController extends Controller
      */
     public function edit(SchoolClass $schoolClass)
     {
-        return view('SchoolClass.edit', ['SchoolClass' => $schoolClass]);
+        $schoolClass->teachers->attatch(3);
+        return view('schoolClass.edit', ['schoolClass' => $schoolClass]);
+
     }
 
     /**
@@ -74,10 +99,10 @@ class SchoolClassController extends Controller
      */
     public function update(Request $request, SchoolClass $schoolClass)
     {
-        $schoolClass->grade = $request->schoolClass_grade;
-       $schoolClass->letter = $request->schoolClass_letter;
-       $schoolClass->save();
-       return redirect()->route('schoolClass.index');
+        $schoolClass->grade = $request->grade;
+        $schoolClass->letter = $request->letter;
+        $schoolClass->save();
+        return redirect()->route('schoolClass.index');
     }
 
     /**
@@ -89,6 +114,6 @@ class SchoolClassController extends Controller
     public function destroy(SchoolClass $schoolClass)
     {
         $schoolClass->delete();
-       return redirect()->route('schoolClass.index');
+        return redirect()->route('schoolClass.index');
     }
 }
