@@ -33,3 +33,6 @@ class CreateSchoolClassTeachersTable extends Migration
         Schema::dropIfExists('school_class_teachers');
     }
 }
+
+
+// fuck yeah!!!!!
